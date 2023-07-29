@@ -145,7 +145,7 @@ if submit:
                 st.warning("Añade algún artículo")
 
         else:  
-                try:
+                #try:
                 #generate invoice pdf
                         api = ApiConnector()
                         root_invoice = api.connect_to_api_and_save_invoice_pdf(from_who,to_who,host_logo,num_invoice,str(date_invoice),str(due_date),st.session_state.invoice_data,notes,term,impuesto,descuento)
@@ -157,8 +157,8 @@ if submit:
                         os.remove(root_invoice)
                 
                 
-                except Exception as excep:
-                        print(str(excep))
-                        st.warning("Hubo un problema generando la factura pdf.")     
+                #except Exception as excep:
+                        #print(str(excep))
+                        #st.warning("Hubo un problema generando la factura pdf.")     
                                
                                 
