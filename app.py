@@ -27,6 +27,7 @@ file_authentication_gs = "invoice-tool-authentication.json"
 google_sheet = "invoice-tool"
 sheet_name = "invoices"
 #url_logo="https://i.ibb.co/12MHwBs/logo.png"
+url_logo = "https://i.ibb.co/jfML997/iconnn.jpg"
 
 st.set_page_config(
     page_title="Invoicing App",
@@ -76,12 +77,12 @@ with st.container():
         cc1.image("assets/logo.PNG",caption="Valerapp",width=100)
         from_who = cc1.text_input("De: *", placeholder="Quién envía esta factura")
         to_who = cc1.text_input("Cobrar a: *", placeholder="Para quién es la factura")
-        host_logo = cc1.text_input("URL logo: ", placeholder="Adjunta la url del logo de tu empresa")
+        #host_logo = cc1.text_input("URL logo: ", placeholder="Adjunta la url del logo de tu empresa")
         cc2.subheader("FACTURA")
         num_invoice = cc2.text_input("#",placeholder="Número de factura")
         date_invoice = cc2.date_input("Fecha *")
         due_date = cc2.date_input("Fecha de vencimiento *")
-        cc2.text_input("Condiciones de pago")
+        #cc2.text_input("Condiciones de pago")
         #cc2.text_input("Orden de compra")
 
 #form for expenses       
@@ -132,7 +133,7 @@ with st.container():
                 final_price = final_price * imp
         descuento = cc3.number_input("Descuento %: ", min_value=0)
         if descuento:
-                final_price = final_price - ((descuento/100) * final_price)
+                final_price = round(final_price - ((descuento/100) * final_price),2)
         cc3.write("Total: "+ str(final_price) + " " +euro_symbol)            
 
 submit = st.button("Enviar")
@@ -148,7 +149,7 @@ if submit:
                 try:
                 #generate invoice pdf
                         api = ApiConnector()
-                        root_invoice = api.connect_to_api_and_save_invoice_pdf(from_who,to_who,host_logo,num_invoice,str(date_invoice),str(due_date),st.session_state.invoice_data,notes,term,impuesto,descuento)
+                        root_invoice = api.connect_to_api_and_save_invoice_pdf(from_who,to_who,url_logo,num_invoice,str(date_invoice),str(due_date),st.session_state.invoice_data,notes,term,impuesto,descuento)
 
                         with open(root_invoice, "rb") as file:
                                 pdf_data = file.read()
